@@ -1,0 +1,26 @@
+{
+    "version": 1,
+    "revision": 0,
+    "rules": [
+        {
+            "primary-output": "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.obj",
+            "outputs": [
+                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc.dt.module.json",
+                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc.dt.d.json",
+                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ifc"
+            ],
+            "provides": [
+                {
+                    "logical-name": "Drawer",
+                    "source-path": "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
+                    "is-interface": true
+                }
+            ],
+            "requires": [
+                {
+                    "logical-name": "OpenGlShape"
+                }
+            ]
+        }
+    ]
+}

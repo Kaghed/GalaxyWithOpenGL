@@ -1,0 +1,10 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
+        "ProvidedModule": "Drawer",
+        "Includes": [],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}
