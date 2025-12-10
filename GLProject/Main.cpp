@@ -70,7 +70,7 @@ int main()
 
 
 	int ewidth, eheight, enrChannels;
-	unsigned char* edata = stbi_load("E:/Aghed/Hope Path/Galaxy/r.jpg", &ewidth, &eheight, &enrChannels, 0);
+	unsigned char* edata = stbi_load("E:/Aghed/Hope Path/GalaxyWithOpenGL/r.jpg", &ewidth, &eheight, &enrChannels, 0);
 	if (edata) {
 		GLenum format = (enrChannels == 4 ? GL_RGBA : GL_RGB);
 		glTexImage2D(GL_TEXTURE_2D, 0, format,ewidth, eheight, 0, format, GL_UNSIGNED_BYTE, edata);
@@ -99,7 +99,7 @@ int main()
 
 
 	int swidth, sheight, snrChannels;
-	unsigned char* sdata = stbi_load("E:/Aghed/Hope Path/Galaxy/ss.jpg", &swidth, &sheight, &snrChannels, 0);
+	unsigned char* sdata = stbi_load("E:/Aghed/Hope Path/GalaxyWithOpenGL/ss.jpg", &swidth, &sheight, &snrChannels, 0);
 	if (sdata) {
 		GLenum format = (snrChannels == 4 ? GL_RGBA : GL_RGB);
 		glTexImage2D(GL_TEXTURE_2D, 0, format,swidth, sheight, 0, format, GL_UNSIGNED_BYTE, sdata);
@@ -130,7 +130,7 @@ int main()
 
 
 	int mwidth, mheight, mnrChannels;
-	unsigned char* mdata = stbi_load("E:/Aghed/Hope Path/Galaxy/moon.jpg", &mwidth, &mheight, &mnrChannels, 0);
+	unsigned char* mdata = stbi_load("E:/Aghed/Hope Path/GalaxyWithOpenGL/moon.jpg", &mwidth, &mheight, &mnrChannels, 0);
 	if (mdata) {
 		GLenum format = (mnrChannels == 4 ? GL_RGBA : GL_RGB);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, mwidth, mheight, 0, format, GL_UNSIGNED_BYTE, mdata);
