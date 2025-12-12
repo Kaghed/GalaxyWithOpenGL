@@ -3,7 +3,4 @@ C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v17
   Scanning sources for module dependencies...
   Main.cpp
 E:\Aghed\Hope Path\GalaxyWithOpenGL\GLProject\Main.cpp(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  Planet.cpp
-E:\Aghed\Hope Path\GalaxyWithOpenGL\GLProject\Planet.cpp(65,32): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
-  Generating Code...
   GLProject.vcxproj -> E:\Aghed\Hope Path\GalaxyWithOpenGL\x64\Debug\Lecture4.exe
