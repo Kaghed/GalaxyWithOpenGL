@@ -3,16 +3,16 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.obj",
+            "primary-output": "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.obj",
             "outputs": [
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\OpenGL.SharedModule.pdb",
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\",
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc"
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\OpenGL.SharedModule.pdb",
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\",
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\Drawer.ixx.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "Drawer",
-                    "source-path": "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
+                    "source-path": "e:\\aghed\\hope path\\galaxywithopengl\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
                     "is-interface": true
                 }
             ],

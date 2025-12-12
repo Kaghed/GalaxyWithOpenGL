@@ -1,7 +1,7 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
+        "Source": "e:\\aghed\\hope path\\galaxywithopengl\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
         "ProvidedModule": "SharedModule",
         "Includes": [
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\stdexcept",
@@ -80,7 +80,7 @@
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\xatomic.h",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\tuple",
             "c:\\program files\\microsoft visual studio\\2022\\community\\vc\\tools\\msvc\\14.44.35207\\include\\xpolymorphic_allocator.h",
-            "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\dependencies\\include\\glfw\\glfw3.h",
+            "e:\\aghed\\hope path\\galaxywithopengl\\opengl.sharedmodule\\dependencies\\include\\glfw\\glfw3.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\um\\gl\\gl.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\shared\\winapifamily.h",
             "c:\\program files (x86)\\windows kits\\10\\include\\10.0.19041.0\\shared\\winpackagefamily.h",

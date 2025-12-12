@@ -1,13 +1,13 @@
 {
     "Version": "1.2",
     "Data": {
-        "Source": "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
+        "Source": "e:\\aghed\\hope path\\galaxywithopengl\\opengl.sharedmodule\\src\\abstraction\\drawer.ixx",
         "ProvidedModule": "Drawer",
         "Includes": [],
         "ImportedModules": [
             {
                 "Name": "OpenGlShape",
-                "BMI": "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc"
+                "BMI": "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc"
             }
         ],
         "ImportedHeaderUnits": []

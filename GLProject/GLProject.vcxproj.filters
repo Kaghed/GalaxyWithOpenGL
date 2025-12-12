@@ -32,6 +32,12 @@
     <None Include="shaders\vs\L4.vs">
       <Filter>Source Files</Filter>
     </None>
+    <None Include="shaders\vs\L5.vs">
+      <Filter>Source Files</Filter>
+    </None>
+    <None Include="shaders\fs\L5.fs">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Planet.h">

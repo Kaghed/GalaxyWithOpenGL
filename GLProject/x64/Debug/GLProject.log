@@ -2,5 +2,8 @@
 C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\Microsoft.CppBuild.targets(524,5): warning MSB8004: Output Directory does not end with a trailing slash.  This build instance will add the slash as it is required to allow proper evaluation of the Output Directory.
   Scanning sources for module dependencies...
   Main.cpp
-E:\Aghed\Hope Path\Galaxy\GLProject\Main.cpp(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
-  GLProject.vcxproj -> E:\Aghed\Hope Path\Galaxy\x64\Debug\Lecture4.exe
+E:\Aghed\Hope Path\GalaxyWithOpenGL\GLProject\Main.cpp(10,10): warning C4067: unexpected tokens following preprocessor directive - expected a newline
+  Planet.cpp
+E:\Aghed\Hope Path\GalaxyWithOpenGL\GLProject\Planet.cpp(65,32): warning C4267: '=': conversion from 'size_t' to 'unsigned int', possible loss of data
+  Generating Code...
+  GLProject.vcxproj -> E:\Aghed\Hope Path\GalaxyWithOpenGL\x64\Debug\Lecture4.exe

@@ -3,16 +3,16 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.obj",
+            "primary-output": "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.obj",
             "outputs": [
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\OpenGL.SharedModule.pdb",
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\",
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc"
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\OpenGL.SharedModule.pdb",
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\",
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\OpenGlShape.ixx.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "OpenGlShape",
-                    "source-path": "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\src\\abstraction\\openglshape.ixx",
+                    "source-path": "e:\\aghed\\hope path\\galaxywithopengl\\opengl.sharedmodule\\src\\abstraction\\openglshape.ixx",
                     "is-interface": true
                 }
             ],

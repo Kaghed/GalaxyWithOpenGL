@@ -3,16 +3,16 @@
     "revision": 0,
     "rules": [
         {
-            "primary-output": "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.obj",
+            "primary-output": "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.obj",
             "outputs": [
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.module.json",
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.d.json",
-                "E:\\Aghed\\Hope Path\\Galaxy\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ifc"
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.module.json",
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ixx.ifc.dt.d.json",
+                "E:\\Aghed\\Hope Path\\GalaxyWithOpenGL\\OpenGL.SharedModule\\x64\\Debug\\Temp\\SharedModule.ifc"
             ],
             "provides": [
                 {
                     "logical-name": "SharedModule",
-                    "source-path": "e:\\aghed\\hope path\\galaxy\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
+                    "source-path": "e:\\aghed\\hope path\\galaxywithopengl\\opengl.sharedmodule\\src\\abstraction\\sharedmodule.ixx",
                     "is-interface": true
                 }
             ],

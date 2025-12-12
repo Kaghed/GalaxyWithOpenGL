@@ -45,19 +45,21 @@ int main()
 
 	stbi_set_flip_vertically_on_load(true);
 
-	Shader ourShader("./shaders/vs/L4.vs", "./shaders/fs/L4.fs");
-//	Shader ourShader("./shaders/vs/L5.vs", "./shaders/fs/L5.fs");
-	Shader allShaders("./shaders/vs/L4.vs", "./shaders/fs/L4.fs");
+	Shader shader("./shaders/vs/L5.vs", "./shaders/fs/L5.fs");
+	Shader sunShader("shaders/vs/L4.vs", "shaders/fs/L4.fs");
+	Shader trailShader("shaders/vs/tr.vs", "shaders/fs/tr.fs");
 
 
 
-	ourShader.use();
-	
+	shader.use();
+
 	mat4 projection = mat4(1.0f);
 	projection = perspective(radians(45.0f), (float)SCR_WIDTH / (float)SCR_HEIGHT, 0.1f, 100.0f);
 	//float aspectRatio = (float)SCR_WIDTH / (float)SCR_HEIGHT;
 	//projection = ortho(-aspectRatio, aspectRatio, -1.0f, 1.0f, 0.1f, 100.0f);
-	ourShader.setMat4("projection", projection);
+	shader.use();
+	shader.setMat4("projection", projection);
+
 
 	unsigned int earthTexture;
 	glGenTextures(1, &earthTexture);
@@ -70,15 +72,16 @@ int main()
 
 
 	int ewidth, eheight, enrChannels;
-	unsigned char* edata = stbi_load("E:/Aghed/Hope Path/Galaxy/r.jpg", &ewidth, &eheight, &enrChannels, 0);
+	unsigned char* edata = stbi_load("E:/Aghed/Hope Path/GalaxyWithOpenGL/r.jpg", &ewidth, &eheight, &enrChannels, 0);
 	if (edata) {
 		GLenum format = (enrChannels == 4 ? GL_RGBA : GL_RGB);
-		glTexImage2D(GL_TEXTURE_2D, 0, format,ewidth, eheight, 0, format, GL_UNSIGNED_BYTE, edata);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, ewidth, eheight, 0, format, GL_UNSIGNED_BYTE, edata);
 
 		glGenerateMipmap(GL_TEXTURE_2D);
 
-	
-	} else {
+
+	}
+	else {
 		std::cout << "Failed to load texture: " << stbi_failure_reason() << std::endl;
 	}
 
@@ -86,7 +89,7 @@ int main()
 	stbi_image_free(edata);
 
 
-	Planet earth(0.5f, 0.0f, 0.0f, 0.0f);        
+	Planet earth(0.8f, 0.0f, 0.0f, 0.0f);
 
 	unsigned int sunTexture;
 	glGenTextures(1, &sunTexture);
@@ -99,10 +102,10 @@ int main()
 
 
 	int swidth, sheight, snrChannels;
-	unsigned char* sdata = stbi_load("E:/Aghed/Hope Path/Galaxy/ss.jpg", &swidth, &sheight, &snrChannels, 0);
+	unsigned char* sdata = stbi_load("E:/Aghed/Hope Path/GalaxyWithOpenGL/ss.jpg", &swidth, &sheight, &snrChannels, 0);
 	if (sdata) {
 		GLenum format = (snrChannels == 4 ? GL_RGBA : GL_RGB);
-		glTexImage2D(GL_TEXTURE_2D, 0, format,swidth, sheight, 0, format, GL_UNSIGNED_BYTE, sdata);
+		glTexImage2D(GL_TEXTURE_2D, 0, format, swidth, sheight, 0, format, GL_UNSIGNED_BYTE, sdata);
 
 		glGenerateMipmap(GL_TEXTURE_2D);
 
@@ -116,9 +119,9 @@ int main()
 	stbi_image_free(sdata);
 
 
-	Planet sun(1.5f, 7.0f, -1.0f, 0.0f);
-	
-		
+	Planet sun(1.5f, 7.0f, 0.0f, 0.0f);
+
+
 	unsigned int moonTexture;
 	glGenTextures(1, &moonTexture);
 	glBindTexture(GL_TEXTURE_2D, moonTexture);
@@ -130,7 +133,7 @@ int main()
 
 
 	int mwidth, mheight, mnrChannels;
-	unsigned char* mdata = stbi_load("E:/Aghed/Hope Path/Galaxy/moon.jpg", &mwidth, &mheight, &mnrChannels, 0);
+	unsigned char* mdata = stbi_load("E:/Aghed/Hope Path/GalaxyWithOpenGL/moon.jpg", &mwidth, &mheight, &mnrChannels, 0);
 	if (mdata) {
 		GLenum format = (mnrChannels == 4 ? GL_RGBA : GL_RGB);
 		glTexImage2D(GL_TEXTURE_2D, 0, format, mwidth, mheight, 0, format, GL_UNSIGNED_BYTE, mdata);
@@ -147,7 +150,7 @@ int main()
 	stbi_image_free(mdata);
 
 
-	Planet moon(0.25f, 0.0f, -0.5f, 3.0f);
+	Planet moon(0.25f, 0.0f, 0.0f, 3.0f);
 	std::vector<glm::vec3> earthTrail;
 
 	bool hideTrail = false;
@@ -157,196 +160,178 @@ int main()
 	bool kousouf = false;
 	bool khousouf = false;
 	float pauseTime = 0;
-	float speedFactor = 1.0f; 
+	float speedFactor = 1.0f;
 
-	glm::vec3 sunPos(0.0f, -1.0f, 0.0f);
+	glm::vec3 sunPos(7.0f, 0.0f, 0.0f);
 
 
+	unsigned int trailVAO, trailVBO;
+	glGenVertexArrays(1, &trailVAO);
+	glGenBuffers(1, &trailVBO);
 
+	glBindVertexArray(trailVAO);
+	glBindBuffer(GL_ARRAY_BUFFER, trailVBO);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(glm::vec3) * 11000, NULL, GL_DYNAMIC_DRAW);
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(glm::vec3), (void*)0);
+	glBindVertexArray(0);
 	while (!glfwWindowShouldClose(window))
 	{
-		{
-			float currentFrame = static_cast<float>(glfwGetTime());
-			deltaTime = currentFrame - lastFrame;
-			lastFrame = currentFrame;
+		float currentFrame = static_cast<float>(glfwGetTime());
+		deltaTime = currentFrame - lastFrame;
+		lastFrame = currentFrame;
 
-			processInput(window);
+		processInput(window);
 
-			glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
-			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glClearColor(0.12f, 0.12f, 0.12f, 1.0f);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-			mat4 view = mat4(1.0f);
-			view = view = camera.GetViewMatrix();
-			ourShader.setMat4("view", view);
+		mat4 view = camera.GetViewMatrix();
 
-			float time = (float)glfwGetTime();
+		sun.model = glm::mat4(1.0f);
+		sun.model = glm::translate(sun.model, glm::vec3(7.0f, 0.0f, 0.0f));
 
-			
-		}
+		glm::vec3 sunWorldPos = glm::vec3(sun.model[3]);
 
-		
+		shader.use();
 
-		ourShader.use();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, earthTexture);
-		glUniform1i(glGetUniformLocation(ourShader.ID, "planetTexture"), 0);
+		float lightRotSpeed = 0.2f;
 		float time = (float)glfwGetTime();
+		float angle = time * lightRotSpeed;
 
-		if (paused) {
-			time = pausedTime;
-		}
-		if (kousouf || khousouf)
-			speedFactor = 6.0f; 
+		glm::vec3 lightPos(
+			7.0f * cos(angle),
+			0.0f,
+			0.0f 
+		);
+
+		shader.setVec3("lightPos", lightPos);
+
+		shader.setVec3("lightPos", sunWorldPos);
+		shader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 0.5f));
+		shader.setVec3("viewPos", camera.Position);
+		shader.setMat4("view", view);
+
+		 time = paused ? pausedTime : (float)glfwGetTime();
+		if (kousouf || khousouf) speedFactor = 6.0f;
 
 		float a = 15.0f, b = 11.0f;
+		glm::vec3 earthPos(a * sin(time * speedFactor), 0.0f, b * cos(time * speedFactor));
 
-		glm::vec3 earthPos(a* sin(time * speedFactor), 0.0f, b* cos(time * speedFactor));
-		earth.model = glm::mat4(1.0f);
-		earth.model = glm::translate(earth.model, earthPos);
+		earth.model = mat4(1.0f);
+		earth.model = translate(earth.model, earthPos);
+		earth.model = rotate(earth.model, time * 2.0f * speedFactor, vec3(0, 0, 1));
 
-		earth.model = glm::rotate(earth.model, time * speedFactor, glm::vec3(0.0f, 1.0f, 0.0f));
+		shader.setMat4("model", earth.model);
+		glBindTexture(GL_TEXTURE_2D, earthTexture);
+		shader.setInt("planetTexture", 0);
+		earth.draw(shader.ID);
 
-		earth.model = glm::rotate(earth.model, time / 2 * speedFactor, glm::vec3(1.0f, 0.0f, 0.0f));
-
-
-
-	
-
-		earth.draw(ourShader.ID);
-
-
-		glActiveTexture(GL_TEXTURE0);
+		sunShader.use();
+		sunShader.setVec3("lightColor", glm::vec3(0.0f));
+		sunShader.setMat4("projection", projection);
+		sunShader.setMat4("view", view);
+		sunShader.setMat4("model", sun.model);
 		glBindTexture(GL_TEXTURE_2D, sunTexture);
-		glUniform1i(glGetUniformLocation(ourShader.ID, "planetTexture"), 0);
+		sunShader.setInt("sunTexture", 0);
+		sun.draw(sunShader.ID);
 
-		sun.draw(ourShader.ID);
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, moonTexture);
-		glUniform1i(glGetUniformLocation(ourShader.ID, "planetTexture"), 0);
-
-
-
-		float moonRadius = 3.0f;     
-		float moonSpeed = 0.4f;       
-
+		float moonRadius = 3.0f;
+		float moonSpeed = 0.4f;
 		glm::vec3 moonPos(
 			earthPos.x + moonRadius * cos(time * moonSpeed * speedFactor),
-			-0.5f,
+			0.0f,
 			earthPos.z + moonRadius * sin(time * moonSpeed * speedFactor)
 		);
-		moon.model = glm::mat4(1.0f);
-		moon.model = glm::translate(moon.model, moonPos);
 
-		moon.model = glm::mat4(1.0f);
-		moon.model = glm::translate(moon.model, moonPos);
+		moon.model = mat4(1.0f);
+		moon.model = translate(moon.model, moonPos);
+		moon.model = rotate(moon.model, time, vec3(0, 1, 0));
 
-		moon.model = glm::rotate(moon.model, time, glm::vec3(0.0f, 1.0f, 0.0f));
-	
-		
-		glm::vec3 higherEarthPos = earthPos;
+		shader.use();
+		shader.setMat4("model", moon.model);
+		glBindTexture(GL_TEXTURE_2D, moonTexture);
+		shader.setInt("planetTexture", 0);
 
-		
-		higherEarthPos.x -= 7.0f;
-		if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS) 
+		if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
 			hideTrail = true;
 		if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-			hideTrail = false; 
+			hideTrail = false;
 		if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
 			kousouf = true, hideTrail = true, earthTrail.clear();
 		if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-			khousouf = true ,hideTrail = true, earthTrail.clear();
-		if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS){
-			kousouf = false , paused = false;
+			khousouf = true, hideTrail = true, earthTrail.clear();
+		if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
+			kousouf = false;
 			khousouf = false;
+			paused = false;
 			speedFactor = 1.0f;
 			time = (float)glfwGetTime();
 		}
-	
-		glColor3f(1.0f, 1.0f, 1.0f);
 
-
-		glBegin(GL_LINE_STRIP);
-		glVertex3f(0.0f, -1.0f, 0.0f);
-		glVertex3f(earthPos.x - 7, earthPos.y, earthPos.z);
-		glEnd();
-
-		if(!hideTrail)
+		if (!hideTrail)
 		{
-
-			earthTrail.push_back(higherEarthPos);
-
-			if (earthTrail.size() > 11000) {
+			earthTrail.push_back(earthPos);
+			if (earthTrail.size() > 11000)
 				earthTrail.erase(earthTrail.begin());
-			}
 
+			glBindBuffer(GL_ARRAY_BUFFER, trailVBO);
+			glBufferSubData(GL_ARRAY_BUFFER, 0, earthTrail.size() * sizeof(glm::vec3), earthTrail.data());
 
-			glBegin(GL_LINE_STRIP);
-			for (auto& p : earthTrail) {
-				glVertex3f(p.x, p.y+1.0f, p.z);
-			}
-		
+			trailShader.use();
+			trailShader.setMat4("view", view);
+			trailShader.setMat4("projection", projection);
 
-			glEnd();
+			glBindVertexArray(trailVAO);
+			glDrawArrays(GL_LINE_STRIP, 0, static_cast<GLsizei>(earthTrail.size()));
+			glBindVertexArray(0);
 		}
 
-		if ((kousouf || khousouf) && time!=pauseTime &&earthPos.x > 14.0f)
+		moon.draw(shader.ID);
+
+		if ((kousouf || khousouf) && time != pauseTime && earthPos.x > 14.0f)
 		{
-			timeIncreasing = true;
-			
-		///// add kousouf things here 
-			
-			cout << earthPos.x << " " << moonPos.x << " ";
-
-			if(kousouf){
-
-				glm::vec3 sunPos(0.0f, -1.0f, 0.0f);
-				glm::vec3 v = earthPos - sunPos;
-				glm::vec3 w = moonPos - sunPos;
-
+			if (kousouf) {
+				glm::vec3 sn(sunPos);
+				sn.z -= 0.8f;
+				glm::vec3 v = earthPos - sn;
+				glm::vec3 w = moonPos - sn;
 
 				float t = glm::dot(w, v) / glm::dot(v, v);
-
-
 				float d = glm::length(glm::cross(w, v)) / glm::length(v);
 
-			if (t > 0.0f && t < 1.0f && d < 0.3f) {
-				paused = true;
-				pausedTime = time;
+				if (t > 0.2f && t < 1.3f && d < 0.2f) {
+					paused = true;
+					pausedTime = time;
+				}
 			}
-			}
+
 			if (khousouf) {
-    glm::vec3 v = earthPos - sunPos; 
-    glm::vec3 w = moonPos - sunPos;  
+				glm::vec3 sn(sunPos);
 
-    float t = glm::dot(w, v) / glm::dot(v, v); 
-    float d = glm::length(glm::cross(w, v)) / glm::length(v); 
+				glm::vec3 v = earthPos - sn;
+				glm::vec3 w = moonPos - sn;
 
-    float earthRadius = 0.5f; 
-    float distSunEarth = glm::length(v);
-    float distSunMoon  = glm::length(w);
+				float t = glm::dot(w, v) / glm::dot(v, v);
+				float d = glm::length(glm::cross(w, v)) / glm::length(v);
 
-  
-    float shadowRadius = earthRadius * 2.0f;
+				float earthRadius = 0.5f;
+				float shadowRadius = earthRadius * 2.0f;
+		
+				if (t > 1.0f && d < shadowRadius && earthPos.x > 14.0f && earthPos.x < 14.2f) {
+					paused = true;
+					pausedTime = time;
 
-    if (t > 1.0f && d < shadowRadius && earthPos.x > 14.0f) {
-        paused = true;
-        pausedTime = time;
-    
-	}
-}
-
-
-
-
+				
+				}
+			}
 		}
 
-		moon.draw(ourShader.ID);
 		glfwSwapBuffers(window);
 		glfwPollEvents();
-
-
 	}
+
 	glfwTerminate();
 	return 0;
 }
@@ -369,7 +354,7 @@ void processInput(GLFWwindow* window)
 		if (!pPressedLastFrame) {
 			paused = !paused;
 			if (paused) {
-				pausedTime = (float)glfwGetTime(); 
+				pausedTime = (float)glfwGetTime();
 			}
 		}
 		pPressedLastFrame = true;
@@ -392,7 +377,7 @@ void mouse_callback(GLFWwindow* window, double xposIn, double yposIn)
 	}
 
 	float xoffset = xpos - lastX;
-	float yoffset = lastY - ypos; 
+	float yoffset = lastY - ypos;
 
 	lastX = xpos;
 	lastY = ypos;

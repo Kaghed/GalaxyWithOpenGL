@@ -139,7 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="shaders\fs\L4.fs" />
+    <None Include="shaders\fs\L5.fs" />
     <None Include="shaders\vs\L4.vs" />
+    <None Include="shaders\vs\L5.vs" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Planet.h" />
