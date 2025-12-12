@@ -1,4 +1,4 @@
-﻿#include <glad/glad.h>
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
@@ -191,31 +191,25 @@ int main()
 
 		sun.model = glm::mat4(1.0f);
 		sun.model = glm::translate(sun.model, glm::vec3(7.0f, 0.0f, 0.0f));
-
 		glm::vec3 sunWorldPos = glm::vec3(sun.model[3]);
 
 		shader.use();
 
+		float time = paused ? pausedTime : (float)glfwGetTime();
 		float lightRotSpeed = 0.2f;
-		float time = (float)glfwGetTime();
 		float angle = time * lightRotSpeed;
-
 		glm::vec3 lightPos(
-			7.0f * cos(angle),
-			0.0f,
-			0.0f 
+			sunWorldPos.x + 7.0f * cos(angle),
+			sunWorldPos.y,
+			sunWorldPos.z + 7.0f * sin(angle)
 		);
 
 		shader.setVec3("lightPos", lightPos);
-
-		shader.setVec3("lightPos", sunWorldPos);
 		shader.setVec3("lightColor", glm::vec3(1.0f, 1.0f, 0.5f));
 		shader.setVec3("viewPos", camera.Position);
 		shader.setMat4("view", view);
 
-		 time = paused ? pausedTime : (float)glfwGetTime();
 		if (kousouf || khousouf) speedFactor = 6.0f;
-
 		float a = 15.0f, b = 11.0f;
 		glm::vec3 earthPos(a * sin(time * speedFactor), 0.0f, b * cos(time * speedFactor));
 
@@ -254,14 +248,10 @@ int main()
 		glBindTexture(GL_TEXTURE_2D, moonTexture);
 		shader.setInt("planetTexture", 0);
 
-		if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS)
-			hideTrail = true;
-		if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS)
-			hideTrail = false;
-		if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS)
-			kousouf = true, hideTrail = true, earthTrail.clear();
-		if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS)
-			khousouf = true, hideTrail = true, earthTrail.clear();
+		if (glfwGetKey(window, GLFW_KEY_Y) == GLFW_PRESS) hideTrail = true;
+		if (glfwGetKey(window, GLFW_KEY_T) == GLFW_PRESS) hideTrail = false;
+		if (glfwGetKey(window, GLFW_KEY_G) == GLFW_PRESS) kousouf = true, hideTrail = true, earthTrail.clear();
+		if (glfwGetKey(window, GLFW_KEY_H) == GLFW_PRESS) khousouf = true, hideTrail = true, earthTrail.clear();
 		if (glfwGetKey(window, GLFW_KEY_J) == GLFW_PRESS) {
 			kousouf = false;
 			khousouf = false;
@@ -273,8 +263,7 @@ int main()
 		if (!hideTrail)
 		{
 			earthTrail.push_back(earthPos);
-			if (earthTrail.size() > 11000)
-				earthTrail.erase(earthTrail.begin());
+			if (earthTrail.size() > 11000) earthTrail.erase(earthTrail.begin());
 
 			glBindBuffer(GL_ARRAY_BUFFER, trailVBO);
 			glBufferSubData(GL_ARRAY_BUFFER, 0, earthTrail.size() * sizeof(glm::vec3), earthTrail.data());
@@ -297,10 +286,8 @@ int main()
 				sn.z -= 0.8f;
 				glm::vec3 v = earthPos - sn;
 				glm::vec3 w = moonPos - sn;
-
 				float t = glm::dot(w, v) / glm::dot(v, v);
 				float d = glm::length(glm::cross(w, v)) / glm::length(v);
-
 				if (t > 0.2f && t < 1.3f && d < 0.2f) {
 					paused = true;
 					pausedTime = time;
@@ -309,21 +296,15 @@ int main()
 
 			if (khousouf) {
 				glm::vec3 sn(sunPos);
-
 				glm::vec3 v = earthPos - sn;
 				glm::vec3 w = moonPos - sn;
-
 				float t = glm::dot(w, v) / glm::dot(v, v);
 				float d = glm::length(glm::cross(w, v)) / glm::length(v);
-
 				float earthRadius = 0.5f;
 				float shadowRadius = earthRadius * 2.0f;
-		
 				if (t > 1.0f && d < shadowRadius && earthPos.x > 14.0f && earthPos.x < 14.2f) {
 					paused = true;
 					pausedTime = time;
-
-				
 				}
 			}
 		}
@@ -331,6 +312,7 @@ int main()
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
+
 
 	glfwTerminate();
 	return 0;
